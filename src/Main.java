@@ -1,11 +1,7 @@
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -15,14 +11,16 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private GridPane root = new GridPane();
+    private int x = 5;
+    private int y = 10;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         root.setHgap(1.0);
         root.setVgap(1.0);
-        for(int i =0; i < 10;i++){
-            for(int a = 0; a <10; a++) {
+        for(int i =0; i < y;i++){
+            for(int a = 0; a < x; a++) {
                 Rectangle n = new Rectangle();
                 n.setHeight(25);
                 n.setWidth(25);
@@ -37,7 +35,7 @@ public class Main extends Application {
         primaryStage.show();
 
 
-           aiSetColor(1,1);
+        aiSetColor(4,5);
 
 
     }
@@ -47,10 +45,9 @@ public class Main extends Application {
         t.setFill(Color.BLUE);
     }
 
-    private void aiSetColor(int x, int y){
-        y--;
-        x--;
-        ((Rectangle)root.getChildren().get(x + y)).setFill(Color.DARKGREEN);
+    private void aiSetColor(int cellX, int cellY){
+        int index = (cellX - 1) + (cellY - 1) * x;
+        ((Rectangle)root.getChildren().get(index)).setFill(Color.DARKGREEN);
     }
 
 

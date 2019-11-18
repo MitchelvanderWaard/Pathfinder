@@ -105,10 +105,10 @@ public class Main extends Application {
             return false;
         }
         ((Rectangle)root.getChildren().get(getIndex(x,y))).setFill(Color.GOLD);
-        alg(x, y + 1);
-        alg(x + 1, y);
-        alg(x, y - 1);
-        alg(x - 1, y);
+        if(alg(x, y + 1)){((Rectangle)root.getChildren().get(getIndex(x,y))).setFill(Color.DARKGREEN); return true;}
+        if(alg(x + 1, y)){((Rectangle)root.getChildren().get(getIndex(x,y))).setFill(Color.DARKGREEN); return true;}
+        if(alg(x, y - 1)){((Rectangle)root.getChildren().get(getIndex(x,y))).setFill(Color.DARKGREEN); return true;}
+        if(alg(x - 1, y)){((Rectangle)root.getChildren().get(getIndex(x,y))).setFill(Color.DARKGREEN); return true;}
         return false;
     }
 

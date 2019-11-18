@@ -66,12 +66,6 @@ public class Main extends Application {
         }
     }
 
-    public void aiSetColor(int cellX, int cellY){
-        int index = getIndex(cellX,cellY);
-        ((Rectangle) root.getChildren().get(index)).setFill(Color.BLUE);
-    }
-
-
     public static void main(String[] args) {
 
 
@@ -80,30 +74,42 @@ public class Main extends Application {
         //myAlgorithm.run();
     }
 
+    public void aiSetColor(int cellX, int cellY){
+        int index = getIndex(cellX,cellY);
+        ((Rectangle) root.getChildren().get(index)).setFill(Color.BLUE);
+    }
+
     private int[] getCor(int index){
-      int corX = (index % x);
-      int corY = (index / x) + 1;
+      //a function to get the X and Y cor from an index
+      int corX = (index % x == 0)? x : index % x;
+      int corY = (corX == x)?(index / x) : (index / x) + 1;
       return new int[]{corX,corY};
     }
 
     private int getIndex(int cellX, int cellY){
         //to make sure the algorithm never uses a wrong x or y
         //calculates the index of the given coordinates
-        if(cellX <= x & cellX > 0 & cellY <= y & cellY > 0) return (cellX - 1) + (cellY - 1) * x;
-        throw new NullPointerException();
+        if(cellX <= x & cellX >= 0 & cellY <= y & cellY >= 0) return (cellX % x == 0)? ((cellX % x) + (cellY * x)) - 1 : (cellX % x) + ((cellY-1) * x) -1;
+        throw new NullPointerException( "X: " + cellX + " <> " + x + " || Y: " + cellY + " <> " + y);
     }
 
     private void initalg(MouseEvent mouseEvent){
         alg(1,1);
     }
 
-    private void alg(int x, int y){
-        if (x > this.x || y > this.y || x <= 0|| y <= 0 || getIndex(x,y) == goal || ((Rectangle)root.getChildren().get(getIndex(x,y))).getFill() == Color.BLACK || ((Rectangle)root.getChildren().get(getIndex(x,y))).getFill() == Color.GOLD ) return;
+    private boolean alg(int x, int y){
+        if (x > this.x || y > this.y || x <= 0|| y <= 0 || ((Rectangle)root.getChildren().get(getIndex(x,y))).getFill() == Color.DARKGREEN|| ((Rectangle)root.getChildren().get(getIndex(x,y))).getFill() == Color.BLACK || ((Rectangle)root.getChildren().get(getIndex(x,y))).getFill() == Color.GOLD ){
+            if(x <= this.x && y <= this.y && x > 0 && y > 0 && getIndex(x,y) == goal){
+                return true;
+            }
+            return false;
+        }
         ((Rectangle)root.getChildren().get(getIndex(x,y))).setFill(Color.GOLD);
         alg(x, y + 1);
         alg(x + 1, y);
         alg(x, y - 1);
         alg(x - 1, y);
+        return false;
     }
 
 }
